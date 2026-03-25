@@ -1,0 +1,22 @@
+.DS_Store
+.env
+.env.local
+node_modules/
+dist/
+__pycache__/
+*.pyc
+
+# Local-only workspaces and side projects
+agency-agents/
+career-qa-website/
+codex/
+design-system/
+graduate_data_env/
+口播和文章/
+素材内核/
+
+# Personal working notes
+morning-report.md
+overnight-plan.json
+overnight-progress.md
+design-review-1.md
