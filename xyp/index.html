@@ -3,14 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#66b94e" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="阳光跑" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <title>阳光跑</title>
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="./icon.svg" />
     <link rel="stylesheet" href="./src/styles.css" />
   </head>
   <body>
     <div class="stage">
       <main class="phone-screen" aria-label="阳光跑页面">
-        <div class="status-space" aria-hidden="true"></div>
-
         <header class="app-header">
           <h1>我</h1>
         </header>
@@ -124,7 +129,8 @@
               <input name="runs" inputmode="numeric" autocomplete="off" />
             </label>
             <button class="fullscreen-button" type="button" data-action="fullscreen">进入全屏</button>
-            <p>仅用于视觉演示，页面不会连接任何真实校园系统。</p>
+            <p class="fullscreen-help" data-field="fullscreenHelp" hidden></p>
+            <p class="settings-note">仅用于视觉演示，页面不会连接任何真实校园系统。</p>
             <div class="settings-actions">
               <button class="secondary-button" type="button" data-action="close">取消</button>
               <button class="dialog-confirm" type="submit">确定</button>

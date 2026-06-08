@@ -6,7 +6,12 @@ import {
   sanitizeName,
   sanitizeRuns,
 } from "./profile.js";
-import { canUseFullscreen, getFullscreenButtonLabel } from "./fullscreen.js";
+import {
+  canUseFullscreen,
+  getFullscreenButtonLabel,
+  getFullscreenHelpText,
+  isStandaloneDisplay,
+} from "./fullscreen.js";
 
 const STORAGE_KEY = "sunshine-run-demo-profile";
 
@@ -16,10 +21,12 @@ const fields = {
   name: document.querySelector('[data-field="name"]'),
   gender: document.querySelector('[data-field="gender"]'),
   scoreMessage: document.querySelector('[data-field="scoreMessage"]'),
+  fullscreenHelp: document.querySelector('[data-field="fullscreenHelp"]'),
 };
 
 const settingsForm = document.querySelector(".settings-dialog");
 const fullscreenButton = document.querySelector('[data-action="fullscreen"]');
+const standaloneQuery = window.matchMedia("(display-mode: standalone)");
 
 let profile = loadProfile();
 
@@ -61,6 +68,12 @@ document.addEventListener("keydown", (event) => {
 });
 
 document.addEventListener("fullscreenchange", renderFullscreenButton);
+
+if (standaloneQuery.addEventListener) {
+  standaloneQuery.addEventListener("change", renderFullscreenButton);
+} else if (standaloneQuery.addListener) {
+  standaloneQuery.addListener(renderFullscreenButton);
+}
 
 settingsForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -134,6 +147,7 @@ function fillSettingsForm(nextProfile) {
 async function toggleFullscreen() {
   if (!canUseFullscreen(document)) {
     renderFullscreenButton();
+    showFullscreenHelp();
     return;
   }
 
@@ -148,9 +162,36 @@ async function toggleFullscreen() {
 
 function renderFullscreenButton() {
   const isSupported = canUseFullscreen(document);
+  const isFullscreen = Boolean(document.fullscreenElement);
+  const isStandalone = getStandaloneState();
 
-  fullscreenButton.textContent = getFullscreenButtonLabel(isSupported, Boolean(document.fullscreenElement));
-  fullscreenButton.disabled = !isSupported;
+  fullscreenButton.textContent = getFullscreenButtonLabel(isSupported, isFullscreen, isStandalone);
+  fullscreenButton.disabled = isStandalone;
+
+  if (isSupported && !isStandalone) {
+    hideFullscreenHelp();
+  }
+}
+
+function showFullscreenHelp() {
+  const text = getFullscreenHelpText(canUseFullscreen(document), getStandaloneState());
+
+  if (!text) {
+    hideFullscreenHelp();
+    return;
+  }
+
+  fields.fullscreenHelp.textContent = text;
+  fields.fullscreenHelp.hidden = false;
+}
+
+function hideFullscreenHelp() {
+  fields.fullscreenHelp.textContent = "";
+  fields.fullscreenHelp.hidden = true;
+}
+
+function getStandaloneState() {
+  return isStandaloneDisplay(navigator, standaloneQuery);
 }
 
 function openModal(name) {
