@@ -56,12 +56,16 @@ button {
   isolation: isolate;
 }
 
+.top-safe-band {
+  flex: 0 0 max(env(safe-area-inset-top), clamp(36px, 5.3dvh, 72px));
+  background: #000;
+}
+
 .app-header {
   position: relative;
   display: grid;
-  flex: 0 0 calc(58px + env(safe-area-inset-top));
+  flex: 0 0 clamp(54px, 6.35dvh, 82px);
   place-items: center;
-  padding-top: env(safe-area-inset-top);
   background: var(--green);
 }
 
@@ -362,8 +366,12 @@ button {
 }
 
 @media (max-height: 700px) {
+  .top-safe-band {
+    flex-basis: max(env(safe-area-inset-top), 32px);
+  }
+
   .app-header {
-    flex-basis: calc(52px + env(safe-area-inset-top));
+    flex-basis: 50px;
   }
 
   .profile-list {
