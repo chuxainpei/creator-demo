@@ -76,39 +76,11 @@ button {
   letter-spacing: 0;
 }
 
-.demo-badge {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.76);
-  border-radius: 999px;
-  padding: 3px 8px;
-  color: #fff;
-  background: rgba(0, 0, 0, 0.16);
-  font-size: 11px;
-  font-weight: 600;
-}
-
 .page-body {
   position: relative;
   flex: 1 1 auto;
   min-height: 0;
   background: #fff;
-}
-
-.demo-watermark {
-  position: absolute;
-  top: 40%;
-  left: 50%;
-  z-index: 0;
-  color: #d54f4f;
-  font-size: clamp(34px, 10vw, 64px);
-  font-weight: 700;
-  letter-spacing: 0;
-  opacity: 0.08;
-  pointer-events: none;
-  transform: translate(-50%, -50%) rotate(-22deg);
-  white-space: nowrap;
 }
 
 .profile-list {
@@ -363,13 +335,6 @@ button {
 }
 
 @media (max-width: 360px) {
-  .demo-badge {
-    top: 7px;
-    right: 7px;
-    padding: 2px 6px;
-    font-size: 10px;
-  }
-
   .score-dialog {
     left: 6%;
     right: 6%;

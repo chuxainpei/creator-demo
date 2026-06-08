@@ -105,7 +105,7 @@ function readSavedProfile() {
     return {
       school: sanitizeName(parsed.school, "示例大学"),
       studentId: sanitizeDigits(parsed.studentId, "2024020018"),
-      name: sanitizeName(parsed.name, "演示用户"),
+      name: sanitizeName(parsed.name, "用户"),
       gender: sanitizeGender(parsed.gender, "女"),
       runs: sanitizeRuns(parsed.runs, 35),
     };

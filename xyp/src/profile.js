@@ -1,7 +1,7 @@
 const DEFAULT_PROFILE = Object.freeze({
   school: "示例大学",
   studentId: "2024020018",
-  name: "演示用户",
+  name: "用户",
   gender: "女",
   runs: 35,
 });
