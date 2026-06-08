@@ -2,9 +2,11 @@ import {
   buildRunScoreMessage,
   createProfile,
   sanitizeDigits,
+  sanitizeGender,
   sanitizeName,
   sanitizeRuns,
 } from "./profile.js";
+import { canUseFullscreen, getFullscreenButtonLabel } from "./fullscreen.js";
 
 const STORAGE_KEY = "sunshine-run-demo-profile";
 
@@ -17,10 +19,12 @@ const fields = {
 };
 
 const settingsForm = document.querySelector(".settings-dialog");
+const fullscreenButton = document.querySelector('[data-action="fullscreen"]');
 
 let profile = loadProfile();
 
 renderProfile(profile);
+renderFullscreenButton();
 openInitialModal();
 
 document.addEventListener("click", (event) => {
@@ -44,6 +48,10 @@ document.addEventListener("click", (event) => {
   if (action === "close") {
     closeModals();
   }
+
+  if (action === "fullscreen") {
+    toggleFullscreen();
+  }
 });
 
 document.addEventListener("keydown", (event) => {
@@ -51,6 +59,8 @@ document.addEventListener("keydown", (event) => {
     closeModals();
   }
 });
+
+document.addEventListener("fullscreenchange", renderFullscreenButton);
 
 settingsForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -61,6 +71,7 @@ settingsForm.addEventListener("submit", (event) => {
     school: sanitizeName(formData.get("school"), profile.school),
     studentId: sanitizeDigits(formData.get("studentId"), profile.studentId),
     name: sanitizeName(formData.get("name"), profile.name),
+    gender: sanitizeGender(formData.get("gender"), profile.gender),
     runs: sanitizeRuns(formData.get("runs"), profile.runs),
   };
 
@@ -95,7 +106,7 @@ function readSavedProfile() {
       school: sanitizeName(parsed.school, "示例大学"),
       studentId: sanitizeDigits(parsed.studentId, "2024020018"),
       name: sanitizeName(parsed.name, "演示用户"),
-      gender: sanitizeName(parsed.gender, "女"),
+      gender: sanitizeGender(parsed.gender, "女"),
       runs: sanitizeRuns(parsed.runs, 35),
     };
   } catch {
@@ -116,7 +127,30 @@ function fillSettingsForm(nextProfile) {
   settingsForm.elements.school.value = nextProfile.school;
   settingsForm.elements.studentId.value = nextProfile.studentId;
   settingsForm.elements.name.value = nextProfile.name;
+  settingsForm.elements.gender.value = nextProfile.gender;
   settingsForm.elements.runs.value = nextProfile.runs;
+}
+
+async function toggleFullscreen() {
+  if (!canUseFullscreen(document)) {
+    renderFullscreenButton();
+    return;
+  }
+
+  if (document.fullscreenElement) {
+    await document.exitFullscreen();
+  } else {
+    await document.documentElement.requestFullscreen();
+  }
+
+  renderFullscreenButton();
+}
+
+function renderFullscreenButton() {
+  const isSupported = canUseFullscreen(document);
+
+  fullscreenButton.textContent = getFullscreenButtonLabel(isSupported, Boolean(document.fullscreenElement));
+  fullscreenButton.disabled = !isSupported;
 }
 
 function openModal(name) {

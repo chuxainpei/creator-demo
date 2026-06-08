@@ -306,7 +306,8 @@ button {
   font-size: clamp(15px, 2.9cqw, 35px);
 }
 
-.settings-dialog input {
+.settings-dialog input,
+.settings-dialog select {
   width: 100%;
   border: 0;
   outline: 0;
@@ -314,6 +315,28 @@ button {
   background: transparent;
   font-size: clamp(16px, 3.1cqw, 38px);
   text-align: right;
+}
+
+.settings-dialog select {
+  appearance: none;
+  cursor: pointer;
+}
+
+.fullscreen-button {
+  width: 100%;
+  border: 1px solid #e5e5e5;
+  border-radius: 6px;
+  margin-top: 5%;
+  padding: 3.2% 0;
+  background: #fafafa;
+  color: #333;
+  cursor: pointer;
+  font-size: clamp(15px, 2.9cqw, 35px);
+}
+
+.fullscreen-button:disabled {
+  color: #aaa;
+  cursor: not-allowed;
 }
 
 .settings-dialog p {

@@ -6,6 +6,8 @@ const DEFAULT_PROFILE = Object.freeze({
   runs: 35,
 });
 
+const SUPPORTED_GENDERS = new Set(["男", "女", "其他"]);
+
 export function sanitizeName(value, fallback) {
   const cleaned = String(value ?? "")
     .replace(/[<>]/g, "")
@@ -31,6 +33,12 @@ export function sanitizeRuns(value, fallback = DEFAULT_PROFILE.runs) {
   return Math.max(0, Math.min(parsed, 999));
 }
 
+export function sanitizeGender(value, fallback = DEFAULT_PROFILE.gender) {
+  const cleaned = sanitizeName(value, fallback);
+
+  return SUPPORTED_GENDERS.has(cleaned) ? cleaned : fallback;
+}
+
 export function createProfile(search = "") {
   const params = new URLSearchParams(search);
 
@@ -38,7 +46,7 @@ export function createProfile(search = "") {
     school: sanitizeName(params.get("school"), DEFAULT_PROFILE.school),
     studentId: sanitizeDigits(params.get("studentId"), DEFAULT_PROFILE.studentId),
     name: sanitizeName(params.get("name"), DEFAULT_PROFILE.name),
-    gender: sanitizeName(params.get("gender"), DEFAULT_PROFILE.gender),
+    gender: sanitizeGender(params.get("gender"), DEFAULT_PROFILE.gender),
     runs: sanitizeRuns(params.get("runs"), DEFAULT_PROFILE.runs),
   };
 }
