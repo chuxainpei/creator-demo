@@ -1,6 +1,6 @@
 const DEFAULT_PROFILE = Object.freeze({
   school: "示例大学",
-  studentId: "2024020018",
+  studentId: "学号",
   name: "用户",
   gender: "女",
   runs: 35,
@@ -55,8 +55,6 @@ export function buildRunScoreMessage(runs) {
   return [
     "本学期已锻炼",
     `阳光跑:${sanitizeRuns(runs)}次`,
-    "此处只展示实际锻炼成绩。其他相关",
-    "各种成绩请至【发现-课外锻炼-锻炼",
-    "查询】页面查询。",
+    "此处只展示实际锻炼成绩。其他相关各种成绩请至【发现-课外锻炼-锻炼查询】页面查询。",
   ].join("\n");
 }

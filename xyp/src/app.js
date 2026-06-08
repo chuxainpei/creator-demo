@@ -13,7 +13,7 @@ import {
   isStandaloneDisplay,
 } from "./fullscreen.js";
 
-const STORAGE_KEY = "sunshine-run-demo-profile";
+const STORAGE_KEY = "sunshine-run-page-profile-v2";
 
 const fields = {
   school: document.querySelector('[data-field="school"]'),
@@ -117,7 +117,7 @@ function readSavedProfile() {
 
     return {
       school: sanitizeName(parsed.school, "示例大学"),
-      studentId: sanitizeDigits(parsed.studentId, "2024020018"),
+      studentId: sanitizeDigits(parsed.studentId, "学号"),
       name: sanitizeName(parsed.name, "用户"),
       gender: sanitizeGender(parsed.gender, "女"),
       runs: sanitizeRuns(parsed.runs, 35),
